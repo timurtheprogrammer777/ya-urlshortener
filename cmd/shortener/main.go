@@ -6,22 +6,20 @@ import (
 	"io"
 	"net/http"
 	"strings"
-	"sync"
 )
 
 var (
 	store = make(map[string]string)
-	mu    sync.Mutex
 )
 
 func main() {
 	http.HandleFunc("/", postHandler)
-	http.HandleFunc("/", getHandler)
+	http.HandleFunc("/{id}", getHandler)
 	http.ListenAndServe(":8080", nil)
 }
 
 func postHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost || r.URL.Path != "/" {
+	if r.Method != http.MethodPost {
 		http.Error(w, "Bad Request", http.StatusBadRequest)
 		return
 	}
@@ -30,9 +28,7 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 	url := string(body)
 	id := generateID()
 
-	mu.Lock()
 	store[id] = url
-	mu.Unlock()
 
 	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Content-Type", "text/plain")
@@ -40,16 +36,14 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func getHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet || r.URL.Path == "/" {
+	if r.Method != http.MethodGet {
 		http.Error(w, "Bad Request", http.StatusBadRequest)
 		return
 	}
 
 	id := strings.TrimPrefix(r.URL.Path, "/")
 
-	mu.Lock()
 	original, ok := store[id]
-	mu.Unlock()
 
 	if !ok {
 		http.Error(w, "Bad Request", http.StatusBadRequest)
