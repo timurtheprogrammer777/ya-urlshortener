@@ -8,6 +8,6 @@ import (
 
 func main() {
 	http.HandleFunc("/", handlers.PostMainHandler)
-	http.HandleFunc("/{id}", handlers.GetIdHandler)
-	http.ListenAndServe(":8081", nil)
+	http.HandleFunc("/{id}", handlers.GetIDHandler)
+	http.ListenAndServe(":8080", nil)
 }

@@ -27,7 +27,7 @@ func PostMainHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("http://localhost:8081/" + id))
 }
 
-func GetIdHandler(w http.ResponseWriter, r *http.Request) {
+func GetIDHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Bad Request", http.StatusBadRequest)
 		return
