@@ -1,60 +1,13 @@
 package main
 
 import (
-	"crypto/rand"
-	"encoding/base64"
-	"io"
 	"net/http"
-	"strings"
-)
 
-var (
-	store = make(map[string]string)
+	"github.com/timurtheprogrammer777/ya-urlshortener.git/internal/handlers"
 )
 
 func main() {
-	http.HandleFunc("/", postHandler)
-	http.HandleFunc("/{id}", getHandler)
-	http.ListenAndServe(":8080", nil)
-}
-
-func postHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "Bad Request", http.StatusBadRequest)
-		return
-	}
-
-	body, _ := io.ReadAll(r.Body)
-	url := string(body)
-	id := generateID()
-
-	store[id] = url
-
-	w.WriteHeader(http.StatusCreated)
-	w.Header().Set("Content-Type", "text/plain")
-	w.Write([]byte("http://localhost:8080/" + id))
-}
-
-func getHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet {
-		http.Error(w, "Bad Request", http.StatusBadRequest)
-		return
-	}
-
-	id := strings.TrimPrefix(r.URL.Path, "/")
-
-	original, ok := store[id]
-
-	if !ok {
-		http.Error(w, "Bad Request", http.StatusBadRequest)
-		return
-	}
-
-	http.Redirect(w, r, original, http.StatusTemporaryRedirect)
-}
-
-func generateID() string {
-	b := make([]byte, 6)
-	rand.Read(b)
-	return base64.URLEncoding.EncodeToString(b)[:8]
+	http.HandleFunc("/", handlers.PostMainHandler)
+	http.HandleFunc("/{id}", handlers.GetIdHandler)
+	http.ListenAndServe(":8081", nil)
 }
