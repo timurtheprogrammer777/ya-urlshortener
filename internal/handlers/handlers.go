@@ -11,7 +11,7 @@ import (
 var store = make(map[string]string)
 
 func PostMainHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
+	if r.Method != http.MethodPost || r.URL.Path != "/" {
 		http.Error(w, "Bad Request", http.StatusBadRequest)
 		return
 	}
@@ -28,7 +28,7 @@ func PostMainHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetIDHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet {
+	if r.Method != http.MethodGet || r.URL.Path != "/" {
 		http.Error(w, "Bad Request", http.StatusBadRequest)
 		return
 	}
