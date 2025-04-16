@@ -19,7 +19,7 @@ func TestPostMainHandler(t *testing.T) {
 
 	resp := w.Result()
 	body, _ := io.ReadAll(resp.Body)
-
+	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusCreated {
 		t.Errorf("ожидался статус %d, получили %d", http.StatusCreated, resp.StatusCode)
 	}
@@ -39,6 +39,7 @@ func TestGetIDHandler_GlobalStore(t *testing.T) {
 	handlers.GetIDHandler(w, req)
 
 	resp := w.Result()
+	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusTemporaryRedirect {
 		t.Errorf("expected 307, got %d", resp.StatusCode)
 	}
