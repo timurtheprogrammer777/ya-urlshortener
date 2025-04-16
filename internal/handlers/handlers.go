@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-var store = make(map[string]string)
+var Store = make(map[string]string)
 
 func PostMainHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
@@ -20,7 +20,7 @@ func PostMainHandler(w http.ResponseWriter, r *http.Request) {
 	url := string(body)
 	id := generateID()
 
-	store[id] = url
+	Store[id] = url
 
 	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Content-Type", "text/plain")
@@ -35,7 +35,7 @@ func GetIDHandler(w http.ResponseWriter, r *http.Request) {
 
 	id := strings.TrimPrefix(r.URL.Path, "/")
 
-	original, ok := store[id]
+	original, ok := Store[id]
 
 	if !ok {
 		http.Error(w, "Bad Request", http.StatusBadRequest)
