@@ -8,8 +8,8 @@ type ConfigType struct {
 }
 
 var ServerConfig = ConfigType{
-	Address:      "localhost:8888",
-	BaseShortURL: "http://localhost:8000/qsd54gFg",
+	Address:      "localhost:8080",
+	BaseShortURL: "http://localhost:8080/qsd54gFg",
 }
 
 func ParseFlags() {
