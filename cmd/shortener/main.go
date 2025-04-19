@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/go-chi/chi"
@@ -14,5 +15,8 @@ func main() {
 
 	r.Post("/", handlers.PostMainHandler)
 	r.Get("/{id}", handlers.GetIDHandler)
-	http.ListenAndServe(":8080", r)
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("URL Shortener работает. Отправьте POST-запрос на /, чтобы сократить ссылку."))
+	})
+	log.Fatal(http.ListenAndServe(config.ServerConfig.Address, r))
 }
