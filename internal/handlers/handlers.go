@@ -6,6 +6,8 @@ import (
 	"io"
 	"net/http"
 	"strings"
+
+	"github.com/timurtheprogrammer777/ya-urlshortener.git/internal/config"
 )
 
 var Store = make(map[string]string)
@@ -24,7 +26,7 @@ func PostMainHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Content-Type", "text/plain")
-	w.Write([]byte("http://localhost:8080/" + id))
+	w.Write([]byte(config.ServerConfig.BaseShortURL + "/" + id))
 }
 
 func GetIDHandler(w http.ResponseWriter, r *http.Request) {
