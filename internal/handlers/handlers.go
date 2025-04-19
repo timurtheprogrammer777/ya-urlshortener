@@ -11,7 +11,6 @@ import (
 var Store = make(map[string]string)
 
 func PostMainHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("hello"))
 	if r.Method != http.MethodPost {
 		http.Error(w, "Bad Request", http.StatusBadRequest)
 		return
@@ -29,8 +28,6 @@ func PostMainHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetIDHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("hello"))
-
 	if r.Method != http.MethodGet {
 		http.Error(w, "Bad Request", http.StatusBadRequest)
 		return
