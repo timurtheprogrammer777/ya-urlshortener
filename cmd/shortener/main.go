@@ -21,6 +21,5 @@ func main() {
 	})
 	fmt.Println("Server running on porn ", config.ServerConfig.Address)
 	log.Fatal(http.ListenAndServe(config.ServerConfig.Address, r))
-	// fmt.Println("Server running on porn ", config.ServerConfig.Address)
 
 }

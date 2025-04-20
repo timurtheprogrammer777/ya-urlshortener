@@ -26,10 +26,7 @@ func PostMainHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Content-Type", "text/plain")
-	// w.Write([]byte(config.ServerConfig.BaseShortURL + "/" + id))
 	w.Write([]byte(config.ServerConfig.BaseShortURL + "/" + id))
-
-	// w.Write([]byte("http://localhost:8080/" + id))
 }
 
 func GetIDHandler(w http.ResponseWriter, r *http.Request) {
