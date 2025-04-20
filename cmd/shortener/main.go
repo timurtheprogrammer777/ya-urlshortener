@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -18,5 +19,8 @@ func main() {
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("URL Shortener работает. Отправьте POST-запрос на /, чтобы сократить ссылку."))
 	})
+	fmt.Println("Server running on porn ", config.ServerConfig.Address)
 	log.Fatal(http.ListenAndServe(config.ServerConfig.Address, r))
+	// fmt.Println("Server running on porn ", config.ServerConfig.Address)
+
 }
