@@ -12,6 +12,9 @@ import (
 )
 
 func main() {
+	if err := logger.InitLogger(); err != nil {
+		log.Fatalf("Failed to initialize logger: %v", err)
+	}
 	config.ParseFlags()
 	r := chi.NewRouter()
 
@@ -21,6 +24,7 @@ func main() {
 		w.Write([]byte("URL Shortener работает. Отправьте POST-запрос на /, чтобы сократить ссылку."))
 	})
 	fmt.Println("Server running on porn ", config.ServerConfig.Address)
+
 	log.Fatal(http.ListenAndServe(config.ServerConfig.Address, r))
 
 }
